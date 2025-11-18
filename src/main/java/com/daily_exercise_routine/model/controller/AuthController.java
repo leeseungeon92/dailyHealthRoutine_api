@@ -53,7 +53,7 @@ public class AuthController {
 
         String token = jwtTokenProvider.createToken(authentication.getName());
 
-        LoginResponse loginResponse = new LoginResponse(token);
+        LoginResponse loginResponse = new LoginResponse(token, request.getUsername());
 
         Response body = Response.success(loginResponse);
 
