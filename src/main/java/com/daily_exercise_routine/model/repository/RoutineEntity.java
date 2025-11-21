@@ -26,4 +26,7 @@ public class RoutineEntity {
 
     @Column(name = "MEMO")
     private String memo;
+
+    @Column(name = "IMAGE")
+    private String image;
 }

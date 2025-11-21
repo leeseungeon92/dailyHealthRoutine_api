@@ -1,6 +1,5 @@
 package com.daily_exercise_routine.model.service;
 
-import com.daily_exercise_routine.common.Response;
 import com.daily_exercise_routine.common.RoutinePart;
 import com.daily_exercise_routine.model.dto.RoutineResponse;
 import com.daily_exercise_routine.model.repository.*;
@@ -42,9 +41,11 @@ public class RoutineService {
                 .findFirst();
 
         String part;
+        boolean completed = false;
 
         if (todayHistoryOpt.isPresent()) {
             part = todayHistoryOpt.get().getPart();
+            completed = todayHistoryOpt.get().getCompleted();
         } else {
             part = String.valueOf(noPartThisWeek(history));
 
@@ -54,6 +55,7 @@ public class RoutineService {
             h.setDate(today);
             h.setWeekStartDate(weekStart);
             h.setPart(part);
+            h.setCompleted(false);
 
             userRoutineHistoryRepository.save(h);
         }
@@ -70,6 +72,7 @@ public class RoutineService {
                     dto.setSets(e.getSets());
                     dto.setRaps(e.getRaps());
                     dto.setMemo(e.getMemo());
+                    dto.setImage(e.getImage());
                     return dto;
                 })
                 .toList();
@@ -77,6 +80,7 @@ public class RoutineService {
         RoutineResponse res = new RoutineResponse();
         res.setDate(today.toString());
         res.setExercises(exercise);
+        res.setCompleted(completed);
         return res;
 
     }
@@ -106,5 +110,13 @@ public class RoutineService {
         List<RoutinePart> newPart = new ArrayList<>(parts);
         Collections.shuffle(newPart);
         return newPart.get(0);
+    }
+
+    public void completeExercise(String username) {
+        UserRoutineHistory todayExercise = userRoutineHistoryRepository.findByUsernameAndDate(username, LocalDate.now())
+                .orElseThrow(() -> new IllegalArgumentException("오늘의 운동 루틴이 존재하지 않습니다."));
+
+        todayExercise.setCompleted(true);
+        userRoutineHistoryRepository.save(todayExercise);
     }
 }

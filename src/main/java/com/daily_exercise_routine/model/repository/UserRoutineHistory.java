@@ -27,4 +27,7 @@ public class UserRoutineHistory {
 
     @Column(name = "WEEK_START_DATE")
     private LocalDate weekStartDate;
+
+    @Column(name = "COMPLETED")
+    private Boolean completed = false;
 }

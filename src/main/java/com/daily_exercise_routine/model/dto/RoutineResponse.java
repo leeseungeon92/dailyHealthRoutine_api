@@ -11,6 +11,7 @@ public class RoutineResponse {
     private String dayOfWeek;
     private String date;
     private List<Exercise> exercises;
+    private boolean completed;
 
     @Setter
     @Getter
@@ -20,5 +21,6 @@ public class RoutineResponse {
         private String sets;
         private String raps;
         private String memo;
+        private String image;
     }
 }
