@@ -1,6 +1,7 @@
 package com.daily_exercise_routine.model.service;
 
 import com.daily_exercise_routine.common.RoutinePart;
+import com.daily_exercise_routine.model.dto.ExerciseHistoryResponse;
 import com.daily_exercise_routine.model.dto.RoutineResponse;
 import com.daily_exercise_routine.model.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -118,5 +120,41 @@ public class RoutineService {
 
         todayExercise.setCompleted(true);
         userRoutineHistoryRepository.save(todayExercise);
+    }
+
+    public ExerciseHistoryResponse getHistory(String username, int year, int month) {
+
+        //해당 월의 시작/끝 계산
+        YearMonth ym = YearMonth.of(year, month);
+        LocalDate start = ym.atDay(1);
+        LocalDate end = ym.atEndOfMonth();
+
+        //해당 유저 해당 월 히스토리 조회
+        List<UserRoutineHistory> histories = userRoutineHistoryRepository.findByUsernameAndDateBetween(username, start, end);
+
+        if (histories == null || histories.isEmpty()) {
+            return new ExerciseHistoryResponse(List.of(), 0);
+        }
+
+        List<UserRoutineHistory> safeList = histories.stream()
+                .filter(Objects::nonNull)
+                .toList();
+
+        //운동완료한 날만 조회
+        List<Integer> completedDays = safeList.stream().filter(UserRoutineHistory::getCompleted)
+                .map(h->h.getDate().getDayOfMonth())
+                .distinct()
+                .sorted()
+                .toList();
+
+        //전체 일 수
+        int totalDayInMonth = ym.lengthOfMonth();
+
+        ExerciseHistoryResponse response =  ExerciseHistoryResponse.builder()
+                .completedDays(completedDays)
+                .totalDayInMonth(totalDayInMonth)
+                .build();
+
+        return response;
     }
 }

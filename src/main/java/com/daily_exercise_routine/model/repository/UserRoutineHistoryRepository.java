@@ -11,4 +11,6 @@ public interface UserRoutineHistoryRepository extends JpaRepository<UserRoutineH
 
     Optional<UserRoutineHistory> findByUsernameAndDate(String username, LocalDate now);
 
+    List<UserRoutineHistory> findByUsernameAndDateBetween(String username, LocalDate startDate, LocalDate endDate);
+
 }
