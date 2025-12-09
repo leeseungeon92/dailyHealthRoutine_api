@@ -19,33 +19,10 @@ public class HomeController {
     @Autowired
     private AuthService authService;
 
-    @GetMapping("/")
+    @GetMapping("/aop-test")
     @ResponseBody
     public String home() {
-        return """
-            <h1>🚀 Spring AOP 실습 프로젝트</h1>
-            <h2>📋 기본 기능</h2>
-            <ul>
-                <li><a href="/test">테스트 페이지</a></li>
-                <li><a href="/login">로그인 페이지</a></li>
-            </ul>
-            
-            <h2>🔐 로그인 AOP 테스트</h2>
-            <ul>
-                <li><a href="/auth/login/admin/admin123">admin 로그인</a></li>
-                <li><a href="/auth/login/user1/password123">user1 로그인</a></li>
-                <li><a href="/auth/login/wrong/password">잘못된 로그인</a></li>
-                <li><a href="/auth/sessions">세션 상태</a></li>
-                <li><a href="/auth/users">사용자 목록</a></li>
-            </ul>
-            
-            <h2>⚡ 일반 AOP 테스트</h2>
-            <ul>
-                <li><a href="/exercise/create">운동 계획 생성</a></li>
-                <li><a href="/exercise/slow">느린 작업</a></li>
-                <li><a href="/user/register">사용자 등록</a></li>
-            </ul>
-            """;
+        return "";
     }
     
     @GetMapping("/test")
