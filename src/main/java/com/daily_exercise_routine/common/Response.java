@@ -15,7 +15,7 @@ public class Response {
     public static Response success(Object data) {
         return new Response(
                 "SUCCESS",
-                "성공",
+                "성공(success)",
                 HttpStatus.OK.value(),
                 data
         );
