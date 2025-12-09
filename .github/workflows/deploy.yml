@@ -26,7 +26,7 @@ jobs:
 
       # 4) Gradle 빌드 (테스트는 제외)
       - name: Build with Gradle (skip tests)
-        run: ./gradlew clean build -x test
+        run: ./gradlew clean bootJar
 
       # 5) 빌드된 JAR 파일을 demo.jar라는 이름으로 복사
       - name: Rename jar to demo.jar
