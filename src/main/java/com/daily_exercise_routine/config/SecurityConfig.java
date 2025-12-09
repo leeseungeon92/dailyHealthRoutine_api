@@ -47,13 +47,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/api/exercise/**").authenticated()
                         .requestMatchers("/",
+                                "/api/health",
                                 "/index.html",
                                 "/static/**",
                                 "/favicon.ico",
                                 "/manifest.json",
                                 "/logo192.png").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/auth/signup","/api/auth/login").permitAll()
+                        .requestMatchers("/api/auth/signup", "/api/auth/login").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter(),
