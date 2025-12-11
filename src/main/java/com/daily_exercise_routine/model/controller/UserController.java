@@ -30,7 +30,6 @@ public class UserController {
 
         UserResponse response = new UserResponse(user.getUsername(), user.getRole());
 
-
         return Response.success(response);
     }
 }
