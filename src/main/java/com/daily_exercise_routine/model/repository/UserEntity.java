@@ -23,6 +23,15 @@ public class UserEntity {
     @Column
     private String role;
 
+    @Column(nullable = false)
+    private String provider;
+
+    @Column(nullable = false)
+    private String providerId;
+
+    @Column
+    private String email;
+
     public UserEntity(String username, String password, String role) {
         this.username = username;
         this.password = password;
